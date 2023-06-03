@@ -2,16 +2,48 @@ const QmateService = require("@sap_oss/wdio-qmate-service");
 
 exports.config = {
 
-  baseUrl: "https://sapui5.hana.ondemand.com/test-resources/sap/suite/ui/generic/template/demokit/sample.manage.products.sepmra/test/index.html",
+  baseUrl: "https://us4.leverx.local:44302/sap/bc/ui2/flp",
     
   specs: [
        
-    "./specs/01_viewSupplier.spec.js",
+    "./specs/01_createNewPO.spec.js",
    
   ],
+  
+  framework: "mocha",
+  mochaOpts: {
+    timeout: 60000,
+    bail: true
+  },
 
-  maxInstances: 2,
+  maxInstances: 3,
 
-  services: [[QmateService]],
+  services: [[QmateService],["chromedriver"]],
+
+  capabilities: [{
+    browserName: 'chrome',
+    acceptInsecureCerts: true,
+        'goog: chromeOptions':{
+           args: [ 
+              "--output=/dev/null",
+              "--log-lenel=3",
+              "--no-sandbox",
+              "--incognito",
+              "--ignore-certificate-errors",
+              "--window-size=1920,1200",
+              "--whitelisted-ips",
+              "--disable-dev-shm-usage",
+              //"--headless",
+              "--disable-gpu",
+              "--disable-web-security",
+              "--disable-infobars",
+              "--disable-extensions",
+              "--disable-logging",
+              "--lang=en-US"
+
+           ]
+
+        }
+}],
     // ...
 };
