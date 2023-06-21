@@ -3,25 +3,39 @@ const QmateService = require("@sap_oss/wdio-qmate-service");
 exports.config = {
 
   baseUrl: "https://us4.leverx.local:44302/sap/bc/ui2/flp",
+  waitForUI5Timeout: 90000,
     
   specs: [
+    [
        
     "./specs/01_createNewPO.spec.js",
-   
+    "./specs/02_checListReport.spec.js",
+
+    ],
   ],
+
+  params: {
+    import: {
+        data: "./data/",
+        purchaseOrderID: "./data/references.json"
+    },
+    export: {
+        purchaseOrderID: "./data/references.json"
+    }
+  },
   
   framework: "mocha",
   mochaOpts: {
-    timeout: 60000,
+    timeout: 120000,
     bail: true
   },
 
   maxInstances: 3,
 
-  services: [[QmateService],["chromedriver"]],
+  services: [[QmateService],['chromedriver']],
 
   capabilities: [{
-    browserName: 'chrome',
+    browserName: "chrome",
     acceptInsecureCerts: true,
         'goog: chromeOptions':{
            args: [ 
@@ -33,7 +47,7 @@ exports.config = {
               "--window-size=1920,1200",
               "--whitelisted-ips",
               "--disable-dev-shm-usage",
-              //"--headless",
+              // "--headless",
               "--disable-gpu",
               "--disable-web-security",
               "--disable-infobars",
@@ -44,6 +58,6 @@ exports.config = {
            ]
 
         }
-}],
+  }],
     // ...
 };
